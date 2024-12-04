@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const AllCampaign = () => {
@@ -52,9 +52,9 @@ const AllCampaign = () => {
                                     <td className="py-3 px-6">{campaign?.type}</td>
                                     <td className="py-3 px-6">${campaign?.minDonation?.toFixed(3)}</td>
                                     <td className="py-3 px-6 text-center">
-                                        <button className="btn bg-secondary btn-xs">
+                                        <Link to={`/campaigns/${campaign._id}`} className="btn bg-secondary btn-xs">
                                             Details
-                                        </button>
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}
