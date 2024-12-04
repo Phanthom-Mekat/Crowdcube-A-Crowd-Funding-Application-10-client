@@ -3,6 +3,9 @@ import MainLayout from "../layout/MainLayout";
 import AllCampaign from "../pages/AllCampaign";
 import Home from "../pages/Home";
 import AddCampaign from "../pages/AddCampaign";
+import AuthLayout from "../layout/AuthLayout";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +34,20 @@ const router = createBrowserRouter([
             },
         ]
     },
+    {
+        path:'auth',
+        element:<AuthLayout/>,
+        children:[
+            {
+                path:'login',
+                element:<Login/>
+            },
+            {
+                path:'register',
+                element:<Register/>
+            }
+        ]
+    }
 ]);
 
 export default router;

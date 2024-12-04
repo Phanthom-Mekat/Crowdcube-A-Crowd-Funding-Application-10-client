@@ -1,13 +1,21 @@
-import {  NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../provider/AuthProvider";
+import { useContext } from "react";
 
 const Navbar = () => {
-    const list=<>
+    const { user, logOut } = useContext(AuthContext)
+    const handleLogout = () => {
+        logOut()
+            .then(() => { })
+            .catch(err => console.log(err))
+    }
+    const list = <>
         <li><NavLink to='/' >Home</NavLink></li>
         <li><NavLink to='/campaigns' >All Campaign</NavLink></li>
         <li><NavLink to='/addCampaign' >Add New Campaign</NavLink></li>
         <li><NavLink to='/myCampaign' >My  Campaign</NavLink></li>
         <li><NavLink to='/myDonations' >My  Donations</NavLink></li>
-        </>
+    </>
     return (
         <>
             <div className="navbar bg-base-100 w-11/12 mx-auto">
@@ -37,11 +45,30 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
-                       {list}
+                        {list}
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Login/Signup</a>
+                    {
+                        user ? (
+                            <div className="dropdown z-10 flex items-center dropdown-end">
+                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar" role="button">
+                                    <div className="w-10 rounded-full">
+                                        <img
+                                            src={user?.photoURL || "https://via.placeholder.com/150"}
+                                            alt="User Avatar"
+                                        />
+                                    </div>
+                                </label>
+                                <button className="btn  bg-primary" onClick={handleLogout}>Logout</button>
+
+                            </div>
+                        ) : (
+                            <Link to="/auth/login" className="btn bg-secondary  ">
+                                Login
+                            </Link>
+                        )
+                    }
                 </div>
             </div>
         </>
