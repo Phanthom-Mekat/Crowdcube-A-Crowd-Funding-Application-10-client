@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
 import AllCampaign from "../pages/AllCampaign";
 import Home from "../pages/Home";
+import AddCampaign from "../pages/AddCampaign";
 
 const router = createBrowserRouter([
     {
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addCampaign",
-                element: <h1>add campaign</h1>
+                element: <AddCampaign/>
             },
             {
                 path: "/myCampaign",
