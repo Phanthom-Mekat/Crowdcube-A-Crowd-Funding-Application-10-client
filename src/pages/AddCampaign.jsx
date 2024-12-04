@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Swal from 'sweetalert2'; 
+import { AuthContext } from '../provider/AuthProvider';
 
 const AddNewCampaign = () => {
+  const {user} = useContext(AuthContext);
   const [errors, setErrors] = useState({});
 
-  const user = {
-    name: "John Doe",
-    email: "john.doe@example.com"
-  };
 
   const validateForm = (formData) => {
     const errors = {};
@@ -25,8 +23,8 @@ const AddNewCampaign = () => {
     e.preventDefault();
 
     const formData = {
-      userName: user.name,
-      userEmail: user.email,
+      userName: user?.displayName,
+      userEmail: user?.email,
       title: e.target.title.value,
       type: e.target.type.value,
       description: e.target.description.value,
@@ -50,6 +48,7 @@ const AddNewCampaign = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
+            e.target.reset();
             Swal.fire({
               title: 'Success!',
               text: 'Campaign added successfully',
@@ -94,7 +93,7 @@ const AddNewCampaign = () => {
                     type="text"
                     id="userName"
                     name="userName"
-                    value={user.name}
+                    value={user?.displayName}
                     readOnly
                     className="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
                   />
@@ -107,7 +106,7 @@ const AddNewCampaign = () => {
                     type="email"
                     id="userEmail"
                     name="userEmail"
-                    value={user.email}
+                    value={user?.email}
                     readOnly
                     className="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
                   />

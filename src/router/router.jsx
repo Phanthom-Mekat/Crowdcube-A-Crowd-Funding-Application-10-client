@@ -22,7 +22,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addCampaign",
-                element: <AddCampaign/>
+                element: <AddCampaign/>,
             },
             {
                 path: "/myCampaign",
@@ -47,6 +47,9 @@ const router = createBrowserRouter([
                 element:<Register/>
             }
         ]
+    },{
+        path:'*',
+        element:<h1>404</h1>
     }
 ]);
 

@@ -2,6 +2,7 @@
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
+import { Toaster } from "react-hot-toast";
 
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -61,7 +62,9 @@ const AuthProvider = ({ children }) => {
     }, []);
   
     return (
-      <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
+      <AuthContext.Provider value={authInfo}>{children}
+      <Toaster />
+      </AuthContext.Provider>
     );
   };
   

@@ -2,9 +2,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const Register = () => {
-    const { createNewUser, setUser,updateUserProfile,  signInWithGoogle } = useContext(AuthContext);
+    const { createNewUser, setUser, updateUserProfile, signInWithGoogle } = useContext(AuthContext);
     const navigate = useNavigate();
     const [error, setError] = useState({});
     const [showPassword, setShowPassword] = useState(false)
@@ -30,8 +31,7 @@ const Register = () => {
         const email = form.get("email");
         const photo = form.get("photo");
         const password = form.get("password");
-        const user={name,email,photo}
-        console.log(user)
+
         setError({});
 
         if (name.length < 3) {
@@ -53,6 +53,20 @@ const Register = () => {
                 updateUserProfile({ displayName: name, photoURL: photo })
                     .then(() => {
                         navigate(location?.state ? location.state : "/");
+                        toast.success("Registered successfully.");
+                       
+                        const newUser = { name, email, photo }
+                        fetch('http://localhost:5000/users', {
+                            method: "POST",
+                            headers: {
+                                "content-type": "application/json"
+                            },
+                            body: JSON.stringify(newUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data);
+                            })
                     })
                     .catch((err) => console.log(err));
             })
@@ -68,6 +82,7 @@ const Register = () => {
                 const user = result.user;
                 setUser(user);
                 navigate(location?.state ? location.state : "/");
+                toast.success("Signed in successfully with Google!");
             })
             .catch((err) => {
                 console.log(err);
@@ -137,10 +152,10 @@ const Register = () => {
                             required
                         />
                         <button className="absolute btn btn-ghost bottom-0 right-0" onClick={(e) => {
-                            e.preventDefault(); 
+                            e.preventDefault();
                             setShowPassword(!showPassword);
                         }}>
-                        {showPassword ? <FaEyeSlash /> : <FaEye />} </button>
+                            {showPassword ? <FaEyeSlash /> : <FaEye />} </button>
                         {error.password && (
                             <label className="label text-sm text-red-500">{error.password}</label>
                         )}
@@ -152,12 +167,12 @@ const Register = () => {
 
                     <div
                         onClick={handleGoogleSignIn}
-                        className="btn w-1/4 mt-2 mx-auto"
+                        className="btn w-1/4 mt-2 mx-auto "
                     >
-                        <FaGoogle className="text-2xl" />
+                        <FaGoogle className="text-2xl text-secondary" />
                     </div>
                     <div className="form-control mt-6">
-                        <button className="btn btn-neutral rounded-none">Register</button>
+                        <button className="btn bg-secondary rounded-none">Register</button>
                     </div>
                 </form>
                 <p className="text-center font-semibold">
