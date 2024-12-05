@@ -27,9 +27,9 @@ const RunningCampaign = () => {
                     {campaigns.map((campaign) => (
                         <div
                             key={campaign._id}
-                            className="relative flex w-full flex-col rounded-xl bg-blue-50 bg-clip-border text-gray-700 shadow-2xl"
+                            className="relative flex w-full flex-col rounded-xl border bg-blue-50 bg-clip-border text-gray-700 shadow-2xl"
                         >
-                            <div className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-blue-600">
+                            <div className="relative mx-4 border-4 border-primary/20 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-blue-600">
                                 <img
                                     src={campaign.image}
                                     alt={campaign.title}

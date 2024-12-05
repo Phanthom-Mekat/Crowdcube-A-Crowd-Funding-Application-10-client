@@ -4,15 +4,37 @@ import { useEffect, useState } from "react";
 const AllCampaign = () => {
     const loadedCampaigns = useLoaderData();
     const [campaigns, setCampaigns] = useState(loadedCampaigns);
+    const [sortOrder, setSortOrder] = useState("asc");
 
     useEffect(() => {
         setCampaigns(loadedCampaigns);
     }, [loadedCampaigns]);
 
+    const handleSort = () => {
+        const sortedCampaigns = [...campaigns].sort((a, b) => {
+            if (sortOrder === "asc") {
+                return a.minDonation - b.minDonation;
+            } else {
+                return b.minDonation - a.minDonation;
+            }
+        });
+        setCampaigns(sortedCampaigns);
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 py-20">
             <div className="container mx-auto px-4">
-                <h1 className="text-3xl font-bold text-center mb-12">All Campaigns</h1>
+                    <h1 className="text-3xl font-bold text-center">All Campaigns</h1>
+                <div className="flex justify-between items-center mb-8">
+                    <div></div>
+                    <button
+                        onClick={handleSort}
+                        className="btn bg-primary text-white px-6 py-2 rounded-md shadow-md hover:bg-primary-focus"
+                    >
+                        Sort by Min Donation ({sortOrder === "asc" ? "Ascending" : "Descending"})
+                    </button>
+                </div>
                 <div className="overflow-x-auto">
                     <table className="table w-full bg-white shadow-lg rounded-lg">
                         <thead>

@@ -3,19 +3,24 @@ import { AuthContext } from "../provider/AuthProvider";
 import { useContext } from "react";
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext);
+
     const handleLogout = () => {
         logOut()
             .then(() => { })
-            .catch(err => console.log(err))
-    }
-    const list = <>
-        <li><NavLink to='/' >Home</NavLink></li>
-        <li><NavLink to='/campaigns' >All Campaign</NavLink></li>
-        <li><NavLink to='/addCampaign' >Add New Campaign</NavLink></li>
-        <li><NavLink to='/myCampaign' >My  Campaign</NavLink></li>
-        <li><NavLink to='/myDonations' >My  Donations</NavLink></li>
-    </>
+            .catch(err => console.log(err));
+    };
+
+    const list = (
+        <>
+            <li><NavLink to='/'>Home</NavLink></li>
+            <li><NavLink to='/campaigns'>All Campaign</NavLink></li>
+            <li><NavLink to='/addCampaign'>Add New Campaign</NavLink></li>
+            <li><NavLink to='/myCampaign'>My Campaign</NavLink></li>
+            <li><NavLink to='/myDonations'>My Donations</NavLink></li>
+        </>
+    );
+
     return (
         <>
             <div className="navbar bg-base-100 w-11/12 mx-auto">
@@ -49,26 +54,30 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    {
-                        user ? (
-                            <div className="dropdown z-10 flex items-center dropdown-end">
-                                <label tabIndex={0} className="btn btn-ghost btn-circle avatar" role="button">
-                                    <div className="w-10 rounded-full">
-                                        <img
-                                            src={user?.photoURL || "https://via.placeholder.com/150"}
-                                            alt="User Avatar"
-                                        />
-                                    </div>
-                                </label>
-                                <button className="btn  bg-primary" onClick={handleLogout}>Logout</button>
-
-                            </div>
-                        ) : (
-                            <Link to="/auth/login" className="btn bg-secondary  ">
-                                Login
-                            </Link>
-                        )
-                    }
+                    {user ? (
+                        <div className="dropdown z-10 flex items-center dropdown-end">
+                            <label
+                                tabIndex={0}
+                                className="btn btn-ghost btn-circle avatar tooltip tooltip-bottom"
+                                data-tip={user?.displayName || "User"}
+                                role="button"
+                            >
+                                <div className="w-10 rounded-full">
+                                    <img
+                                        src={user?.photoURL || "https://via.placeholder.com/150"}
+                                        alt="User Avatar"
+                                    />
+                                </div>
+                            </label>
+                            <button className="btn bg-primary ml-2" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <Link to="/auth/login" className="btn bg-secondary">
+                            Login
+                        </Link>
+                    )}
                 </div>
             </div>
         </>
