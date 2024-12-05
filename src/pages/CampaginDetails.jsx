@@ -105,7 +105,7 @@ const CampaignDetails = () => {
                         <div className="flex items-center space-x-2 mb-4">
                             <input
                                 type="number"
-                                value={donationAmount}
+                                defaultValue={campaignData?.minDonation}
                                 onChange={(e) => setDonationAmount(e.target.value)}
                                 className="w-full p-2 border border-gray-300 rounded"
                                 placeholder="Enter donation amount"

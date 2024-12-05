@@ -9,6 +9,7 @@ import Register from "../components/Register";
 import CampaginDetails from "../pages/CampaginDetails";
 import MyCampaign from "../pages/MyCampaign";
 import UpdateCampaign from "../components/UpdateCampaign";
+import MyDonation from "../pages/MyDonation";
 
 const router = createBrowserRouter([
     {
@@ -32,10 +33,7 @@ const router = createBrowserRouter([
                 path: "/myCampaign",
                 element:<MyCampaign />,
             },
-            {
-                path: "/myDonations",
-                element: <h1>my donations</h1>
-            },
+            
             {
                 path:"/campaigns/:id",
                 element:<CampaginDetails />,
@@ -46,7 +44,10 @@ const router = createBrowserRouter([
                 element:<UpdateCampaign/>,
                 loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
 
-            }
+            },{
+                path: "/myDonations",
+                element: <MyDonation/>
+            },
         ]
     },
     {
