@@ -7,6 +7,7 @@ import AuthLayout from "../layout/AuthLayout";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import CampaginDetails from "../pages/CampaginDetails";
+import MyCampaign from "../pages/MyCampaign";
 
 const router = createBrowserRouter([
     {
@@ -28,7 +29,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/myCampaign",
-                element: <h1>my campaign</h1>
+                element:<MyCampaign />,
             },
             {
                 path: "/myDonations",

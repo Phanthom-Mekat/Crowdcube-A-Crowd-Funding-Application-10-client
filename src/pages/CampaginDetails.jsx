@@ -8,15 +8,13 @@ const CampaignDetails = () => {
     const { user } = useContext(AuthContext);
     const campaignData = useLoaderData();
     const [donationAmount, setDonationAmount] = useState(0);
-    const progressPercentage = Math.min((campaignData.minDonation / 1000) * 100, 100);
+    const progressPercentage = Math.min((campaignData?.minDonation / 1000) * 100, 100);
 
     const handleDonate = () => {
-        // Check if the campaign deadline has passed
-        const deadlineDate = new Date(campaignData.deadline);
+        const deadlineDate = new Date(campaignData?.deadline);
         const currentDate = new Date();
 
         if (currentDate > deadlineDate) {
-            // Show toast if deadline is over
             toast.error('Sorry, this campaign has ended. Donations are no longer accepted.', {
                 duration: 4000,
                 position: 'top-center',
@@ -29,7 +27,6 @@ const CampaignDetails = () => {
             return;
         }
 
-        // Proceed with donation if deadline is not passed
         const donation = {
             userName: user?.displayName,
             userEmail: user?.email,
@@ -57,7 +54,6 @@ const CampaignDetails = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 py-10">
-            {/* Add Toaster component to show notifications */}
             <Toaster />
             
             <div className="container mx-auto px-4 max-w-6xl">
@@ -65,17 +61,14 @@ const CampaignDetails = () => {
                     {/* Image Section */}
                     <div className="relative">
                         <img
-                            src={campaignData.image}
-                            alt={campaignData.title}
+                            src={campaignData?.image}
+                            alt={campaignData?.title}
                             className="w-full rounded-2xl shadow-2xl object-cover h-[500px]"
                         />
                     </div>
-
-                    {/* Campaign Details Section */}
                     <div className="bg-white rounded-2xl shadow-lg p-6 space-y-6">
-                        <h1 className="text-2xl font-bold text-gray-800">{campaignData.title}</h1>
+                        <h1 className="text-2xl font-bold text-gray-800">{campaignData?.title}</h1>
 
-                        {/* Progress Bar */}
                         <div>
                             <div className="w-full bg-gray-200 rounded-full h-2.5 mb-3">
                                 <div
@@ -93,24 +86,22 @@ const CampaignDetails = () => {
                         <div className="space-y-4 text-sm">
                             <div className="flex items-center space-x-2">
                                 <User className="w-5 h-5 text-primary" />
-                                <span>{campaignData.userName}</span>
+                                <span>{campaignData?.userName}</span>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Calendar className="w-5 h-5 text-primary" />
-                                <span>{campaignData.deadline}</span>
+                                <span>{campaignData?.deadline}</span>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <Gift className="w-5 h-5 text-primary" />
-                                <span>Minimum Donation: ${campaignData.minDonation}</span>
+                                <span>Minimum Donation: ${campaignData?.minDonation}</span>
                             </div>
                         </div>
 
                         {/* Description */}
                         <p className="text-gray-600 text-sm leading-relaxed">
-                            {campaignData.description}
+                            {campaignData?.description}
                         </p>
-
-                        {/* Donation Input and Button */}
                         <div className="flex items-center space-x-2 mb-4">
                             <input
                                 type="number"
