@@ -22,7 +22,7 @@ const MyDonation = () => {
                 <h1 className="text-3xl font-bold text-center mb-6">My Donation Campaigns</h1>
                 {myDonation === null && (
                     <div className="flex justify-center items-center">
-                        <p className="text-lg text-gray-500">Loading campaigns...</p>
+                        <div className="p-44 text-center text-2xl text-green-500"><span className="loading loading-dots loading-lg"></span></div>
                     </div>
                 )}
                 {myDonation?.length === 0 && (

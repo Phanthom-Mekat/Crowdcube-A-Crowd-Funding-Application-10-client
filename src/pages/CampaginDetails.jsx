@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import { Gift, User, Calendar, CreditCard } from 'lucide-react';
+import { Gift, User, Calendar, CreditCard, LucideBriefcaseBusiness } from 'lucide-react';
 import { useContext, useState } from "react";
 import { Toaster, toast } from 'react-hot-toast';
 import { AuthContext } from "../provider/AuthProvider";
@@ -95,6 +95,10 @@ const CampaignDetails = () => {
                             <div className="flex items-center space-x-2">
                                 <Gift className="w-5 h-5 text-primary" />
                                 <span>Minimum Donation: ${campaignData?.minDonation}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <LucideBriefcaseBusiness className="w-5 h-5 text-primary" />
+                                <span>Type: {campaignData?.type}</span>
                             </div>
                         </div>
 

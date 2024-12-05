@@ -10,6 +10,8 @@ import CampaginDetails from "../pages/CampaginDetails";
 import MyCampaign from "../pages/MyCampaign";
 import UpdateCampaign from "../components/UpdateCampaign";
 import MyDonation from "../pages/MyDonation";
+import PrivateRouter from "./PrivateRouter";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
     {
@@ -27,26 +29,26 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addCampaign",
-                element: <AddCampaign/>,
+                element: <PrivateRouter><AddCampaign/></PrivateRouter> ,
             },
             {
                 path: "/myCampaign",
-                element:<MyCampaign />,
+                element:<PrivateRouter><MyCampaign/></PrivateRouter>,
             },
             
             {
                 path:"/campaigns/:id",
-                element:<CampaginDetails />,
+                element:<PrivateRouter><CampaginDetails/></PrivateRouter>,
                 loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
             },
             {
                 path:'/updateCampaign/:id',
-                element:<UpdateCampaign/>,
+                element:<PrivateRouter><UpdateCampaign/></PrivateRouter>,
                 loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
 
             },{
                 path: "/myDonations",
-                element: <MyDonation/>
+                element: <PrivateRouter><MyDonation/></PrivateRouter>
             },
         ]
     },
@@ -65,7 +67,7 @@ const router = createBrowserRouter([
         ]
     },{
         path:'*',
-        element:<h1>404</h1>
+        element:<ErrorPage />
     }
 ]);
 

@@ -59,7 +59,7 @@ const MyCampaign = () => {
 
                 {campaigns === null && (
                     <div className="flex justify-center items-center">
-                        <p className="text-lg text-gray-500">Loading campaigns...</p>
+                        <div className="p-44 text-center text-2xl text-green-500"><span className="loading loading-dots loading-lg"></span></div>
                     </div>
                 )}
 
