@@ -50,7 +50,7 @@ const AllCampaign = () => {
                                     <td className="py-3 px-6">{campaign?.title}</td>
                                     <td className="py-3 px-6">{campaign?.userName}</td>
                                     <td className="py-3 px-6">{campaign?.type}</td>
-                                    <td className="py-3 px-6">${campaign?.minDonation?.toFixed(3)}</td>
+                                    <td className="py-3 px-6">${campaign?.minDonation}</td>
                                     <td className="py-3 px-6 text-center">
                                         <Link to={`/campaigns/${campaign._id}`} className="btn bg-secondary btn-xs">
                                             See More...

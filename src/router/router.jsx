@@ -8,6 +8,7 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import CampaginDetails from "../pages/CampaginDetails";
 import MyCampaign from "../pages/MyCampaign";
+import UpdateCampaign from "../components/UpdateCampaign";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
             {
                 path:"/campaigns/:id",
                 element:<CampaginDetails />,
+                loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
+            },
+            {
+                path:'/updateCampaign/:id',
+                element:<UpdateCampaign/>,
                 loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
 
             }

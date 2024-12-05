@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 
 import {  Trash2Icon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const MyCampaign = () => {
     const { user } = useContext(AuthContext);
@@ -74,15 +75,16 @@ const MyCampaign = () => {
                                         <td className="py-3 px-6">{campaign?.userName}</td>
                                         <td className="py-3 px-6">{campaign?.type}</td>
                                         <td className="py-3 px-6">
-                                            ${campaign?.minDonation?.toFixed(2)}
+                                            ${campaign?.minDonation}
                                         </td>
                                         <td className="py-3 px-6">{campaign?.deadline}</td>
                                         <td className="py-3 px-6 text-center">
-                                            <button
+                                            <Link
+                                                to={`/updateCampaign/${campaign._id}`}
                                                 className="btn bg-secondary btn-xs"
                                             >
                                               Update
-                                            </button>
+                                            </Link>
                                             <button><Trash2Icon className="w-6 h-6 inline ml-2 text-red-600 " /></button>
                                         </td>
                                     </tr>
