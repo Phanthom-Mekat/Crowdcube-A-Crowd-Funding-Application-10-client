@@ -3,6 +3,7 @@ import { AuthContext } from "../provider/AuthProvider";
 
 import {  Trash2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MyCampaign = () => {
     const { user } = useContext(AuthContext);
@@ -17,28 +18,57 @@ const MyCampaign = () => {
                 })
                 .catch((error) => console.error("Failed to fetch campaigns:", error));
         }
-    }, [user?.email]);
+    }, [user?.email]);  
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:5000/campaigns/${id}`, {
+                    method: "DELETE",
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.deletedCount > 0) {
+                            const updatedCampaigns = campaigns.filter((campaign) => campaign._id !== id);
+                            setCampaigns(updatedCampaigns);
+                            Swal.fire(
+                                'Deleted!',
+                                'Your campaign has been deleted.',
+                                'success'
+                            );
+                        }
+                    })
+                    .catch((error) => console.error("Failed to delete campaign:", error));
+            }
+        });
+    };
+
 
     return (
         <div className="min-h-screen bg-gray-50 py-20">
             <div className="container mx-auto px-4">
                 <h1 className="text-3xl font-bold text-center mb-12">My Campaigns</h1>
 
-                {/* Loading State */}
                 {campaigns === null && (
                     <div className="flex justify-center items-center">
                         <p className="text-lg text-gray-500">Loading campaigns...</p>
                     </div>
                 )}
 
-                {/* Empty State */}
                 {campaigns?.length === 0 && (
                     <div className="flex justify-center items-center">
                         <p className="text-lg text-gray-500">No campaigns found.</p>
                     </div>
                 )}
 
-                {/* Campaign Table */}
                 {campaigns?.length > 0 && (
                     <div className="overflow-x-auto">
                         <table className="table w-full bg-white shadow-lg rounded-lg">
@@ -85,7 +115,9 @@ const MyCampaign = () => {
                                             >
                                               Update
                                             </Link>
-                                            <button><Trash2Icon className="w-6 h-6 inline ml-2 text-red-600 " /></button>
+                                            <button 
+                                            onClick={() => handleDelete(campaign._id)}
+                                            ><Trash2Icon className="w-6 h-6 inline ml-2 text-red-600 " /></button>
                                         </td>
                                     </tr>
                                 ))}
