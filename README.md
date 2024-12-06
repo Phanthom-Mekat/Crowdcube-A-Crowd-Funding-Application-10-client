@@ -1,4 +1,3 @@
-/*************  ✨ Codeium Command 🌟  *************/
 # Crowdcube: A Crowd Funding Application
 ========================================
 
@@ -40,4 +39,3 @@ A crowdfunding website is a platform where people can raise money for different 
 *   Express.js
 *   MongoDB
 
-/******  6d6ea743-8e66-4bcb-accb-f34c43dfb105  *******/
