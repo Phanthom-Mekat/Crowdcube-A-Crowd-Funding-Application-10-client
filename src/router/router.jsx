@@ -25,7 +25,7 @@ const router = createBrowserRouter([
             {
                 path: "/campaigns",
                 element: <AllCampaign/>,
-                loader: () => fetch('http://localhost:5000/campaigns')
+                loader: () => fetch('https://batch-10-assignment-10-server.vercel.app/campaigns')
             },
             {
                 path: "/addCampaign",
@@ -39,12 +39,12 @@ const router = createBrowserRouter([
             {
                 path:"/campaigns/:id",
                 element:<PrivateRouter><CampaginDetails/></PrivateRouter>,
-                loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
+                loader: ({params}) => fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${params.id}`)
             },
             {
                 path:'/updateCampaign/:id',
                 element:<PrivateRouter><UpdateCampaign/></PrivateRouter>,
-                loader: ({params}) => fetch(`http://localhost:5000/campaigns/${params.id}`)
+                loader: ({params}) => fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${params.id}`)
 
             },{
                 path: "/myDonations",

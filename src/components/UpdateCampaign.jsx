@@ -35,7 +35,7 @@ const UpdateCampaign = () => {
             image
         };
 
-        fetch(`http://localhost:5000/campaigns/${_id}`, {
+        fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${_id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json",

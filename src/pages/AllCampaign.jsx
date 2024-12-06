@@ -23,20 +23,20 @@ const AllCampaign = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-20">
+        <div className="min-h-screen bg-white dark:bg-gray-800 text-black dark:text-white py-20">
             <div className="container mx-auto px-4">
-                    <h1 className="text-3xl font-bold text-center">All Campaigns</h1>
+                    <h1 className="text-3xl font-bold text-center mb-3">All Campaigns</h1>
                 <div className="flex justify-between items-center mb-8">
                     <div></div>
                     <button
                         onClick={handleSort}
-                        className="btn bg-primary text-white px-6 py-2 rounded-md shadow-md hover:bg-primary-focus"
+                        className="btn bg-primary text-white rounded-md shadow-md hover:bg-primary-focus"
                     >
                         Sort by Min Donation ({sortOrder === "asc" ? "Ascending" : "Descending"})
                     </button>
                 </div>
                 <div className="overflow-x-auto">
-                    <table className="table w-full bg-white shadow-lg rounded-lg">
+                    <table className="table w-full bg-white dark:bg-gray-800 text-black dark:text-white shadow-lg rounded-lg">
                         <thead>
                             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                 <th className="py-3 px-6 text-left">Image</th>

@@ -56,7 +56,7 @@ const Register = () => {
                         toast.success("Registered successfully.");
                        
                         const newUser = { name, email, photo }
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://batch-10-assignment-10-server.vercel.app/users', {
                             method: "POST",
                             headers: {
                                 "content-type": "application/json"

@@ -3,7 +3,8 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase/firebase.config";
 import { Toaster } from "react-hot-toast";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
@@ -13,7 +14,11 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [email, setEmail] = useState("");
     // console.log(loading, user);
-  
+    useEffect(() => {
+      AOS.init({ duration: 1500, easing: "ease-in-out" });
+    }, []);
+
+
     const createNewUser = (email, password) => {
       setLoading(true);
       return createUserWithEmailAndPassword(auth, email, password);

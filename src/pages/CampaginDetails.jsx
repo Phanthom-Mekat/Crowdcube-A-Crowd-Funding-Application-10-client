@@ -27,6 +27,19 @@ const CampaignDetails = () => {
             return;
         }
 
+        if(donationAmount < campaignData?.minDonation) {
+            toast.error(`You must donate at least $${campaignData?.minDonation} to this campaign.`, {
+                duration: 4000,
+                position: 'top-center',
+                style: {
+                    background: '#ff4444',
+                    color: 'white',
+                    border: '1px solid #ff4444'
+                }
+            });
+            return;
+            }
+
         const donation = {
             userName: user?.displayName,
             userEmail: user?.email,
@@ -35,7 +48,7 @@ const CampaignDetails = () => {
         };
         
 
-        fetch('http://localhost:5000/donate', {
+        fetch('https://batch-10-assignment-10-server.vercel.app/donate', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -109,10 +122,10 @@ const CampaignDetails = () => {
                         <div className="flex items-center space-x-2 mb-4">
                             <input
                                 type="number"
-                                defaultValue={campaignData?.minDonation}
                                 onChange={(e) => setDonationAmount(e.target.value)}
                                 className="w-full p-2 border border-gray-300 rounded"
                                 placeholder="Enter donation amount"
+                                required
                             />
                         </div>
                         <button 

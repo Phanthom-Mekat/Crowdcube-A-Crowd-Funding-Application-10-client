@@ -3,14 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
-
 *{
     margin: 0 ;
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 body{
     font-family: 'Lexend', sans-serif;
+   
+    transition: background-color 0.3s, color 0.3s;
 }
 .h-font{
     font-family: 'Headland One', serif;

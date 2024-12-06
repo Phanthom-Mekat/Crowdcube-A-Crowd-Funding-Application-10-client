@@ -38,7 +38,7 @@ const AddNewCampaign = () => {
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
-      fetch('http://localhost:5000/campaigns', {
+      fetch('https://batch-10-assignment-10-server.vercel.app/campaigns', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

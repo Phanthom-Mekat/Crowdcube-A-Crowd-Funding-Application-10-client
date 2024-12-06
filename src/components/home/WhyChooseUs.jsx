@@ -1,4 +1,6 @@
-import { FaHandshake, FaShieldAlt, FaRocket, FaGlobe, FaTrophy, FaHeart } from "react-icons/fa";
+import { FaHandshake, FaShieldAlt,  FaGlobe, FaTrophy, FaHeart } from "react-icons/fa";
+import { Typewriter } from "react-simple-typewriter";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const WhyChooseUs = () => {
     const features = [
@@ -15,7 +17,12 @@ const WhyChooseUs = () => {
             bgColor: "bg-green-50"
         },
         {
-            icon: <FaRocket className="text-5xl text-primary transition-transform duration-300 group-hover:scale-110" />,
+            icon: <DotLottieReact
+                src="https://lottie.host/bb300e6e-c62e-4c98-8482-25d4e954f1f7/HWcirc4ZCY.lottie"
+                loop
+                autoplay
+                style={{ width: '80px', height: '50px', background: 'transparent' }}
+            />,
             title: "Fast & Easy Setup",
             description: "Launch campaigns in minutes with our intuitive, user-friendly interface.",
             bgColor: "bg-purple-50"
@@ -41,15 +48,28 @@ const WhyChooseUs = () => {
     ];
 
     return (
-        <section className="py-16 bg-gradient-to-br from-blue-50 to-white">
+        <section className="py-16  bg-white dark:bg-gray-800 text-black dark:text-white" data-aos="fade-up" >
             <div className="container mx-auto px-4">
-                <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800">
-                    Why Choose Our Platform?
+                <h2 className="text-4xl font-extrabold text-center mb-12 ">
+                    Why Choose Our Platform - {' '}
+                    <span className="text-primary">
+
+                        <Typewriter
+                            words={['Trusted', 'Secure', 'Fast', 'Easy!']}
+                            loop={true}
+                            cursor
+                            cursorStyle='_'
+                            typeSpeed={70}
+                            deleteSpeed={50}
+                            delaySpeed={1000}
+                        />
+                    </span>
+
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {features.map((feature, index) => (
-                        <div 
-                            key={index} 
+                        <div
+                            key={index}
                             className={`group ${feature.bgColor} p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-transparent hover:border-primary/20`}
                         >
                             <div className="flex flex-col items-center text-center">

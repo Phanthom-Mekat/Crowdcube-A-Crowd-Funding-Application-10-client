@@ -5,7 +5,7 @@ const RunningCampaign = () => {
     const [campaigns, setCampaigns] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/campaigns')
+        fetch('https://batch-10-assignment-10-server.vercel.app/campaigns')
             .then((res) => res.json())
             .then((data) => {
                 const runningCampaigns = data.filter((campaign) => {
@@ -18,16 +18,16 @@ const RunningCampaign = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gray-50 py-20">
+        <div className="min-h-screen  py-20 bg-white dark:bg-gray-800 text-black dark:text-white " data-aos="fade-up" data-aos-duration="1400" >
             <div className="container mx-auto px-4">
-                <h1 className="text-3xl font-bold text-center mb-20">
+                <h1 className="text-3xl font-bold text-center  mb-20">
                     Running Campaigns
                 </h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-14">
                     {campaigns.map((campaign) => (
                         <div
                             key={campaign._id}
-                            className="relative flex w-full flex-col rounded-xl border bg-blue-50 bg-clip-border text-gray-700 shadow-2xl"
+                            className="relative flex w-full flex-col rounded-xl border bg-blue-50 bg-clip-border dark:border-gray-700 dark:bg-gray-900 dark:text-white  text-gray-700 shadow-2xl"
                         >
                             <div className="relative mx-4 border-4 border-primary/20 -mt-6 h-40 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-blue-600">
                                 <img
@@ -43,15 +43,15 @@ const RunningCampaign = () => {
                                 <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
                                     {campaign.description.slice(0, 100)}...
                                 </p>
-                                <div className="text-sm text-gray-500 space-y-2 mt-2">
+                                <div className="text-sm text-gray-400 space-y-2 mt-2">
                                     <p>
-                                        <span className="font-medium text-gray-700">Type:</span> {campaign.type}
+                                        <span className="font-medium text-gray-500">Type:</span> {campaign.type}
                                     </p>
                                     <p>
-                                        <span className="font-medium text-gray-700">Min Donation:</span> ${campaign.minDonation}
+                                        <span className="font-medium text-gray-500">Min Donation:</span> ${campaign.minDonation}
                                     </p>
                                     <p>
-                                        <span className="font-medium text-gray-700">Deadline:</span>{" "}
+                                        <span className="font-medium text-gray-500">Deadline:</span>{" "}
                                         {new Date(campaign.deadline).toLocaleDateString()}
                                     </p>
                                 </div>

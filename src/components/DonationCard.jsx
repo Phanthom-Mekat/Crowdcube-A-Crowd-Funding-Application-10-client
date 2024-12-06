@@ -7,7 +7,7 @@ const DonationCard = ({ campaigns,amount }) => {
     const [campaign, setCampaign] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/campaigns/${campaigns}`)
+        fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${campaigns}`)
             .then((res) => res.json())
             .then((data) => setCampaign(data))
             .catch((error) => console.error("Failed to fetch campaign:", error));
