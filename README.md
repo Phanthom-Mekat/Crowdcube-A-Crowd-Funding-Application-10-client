@@ -1,18 +1,26 @@
-#Crowdcube: A Crowd Funding Application
+/*************  ✨ Codeium Command 🌟  *************/
+# Crowdcube: A Crowd Funding Application
 ========================================
 
-##Project Theme
+## Project Theme
 -------------
 
 A crowdfunding website is a platform where people can raise money for different projects, ideas, or causes by inviting others to contribute financially. These projects can include personal needs (like medical expenses), creative ideas (like making a film or app), and startups (like launching a new product).
 
-##Live Site URL
+## Live Site URL
 -------------
 
-[https://crowdcubes.netlify.app/](https://crowdcubes.netlify.app/)
-[firebase](https://crowdfund-f95eb.web.app/)
-[backend vercel](https://batch-10-assignment-10-server.vercel.app)
-##Features
+*[netlify link](https://crowdcubes.netlify.app/)
+
+
+
+*[firebase link](https://crowdfund-f95eb.web.app/)
+
+
+*[backend vercel link](https://batch-10-assignment-10-server.vercel.app)
+
+---------------------
+## Features
 --------
 
 *   User authentication system
@@ -31,3 +39,5 @@ A crowdfunding website is a platform where people can raise money for different 
 *   Node.js
 *   Express.js
 *   MongoDB
+
+/******  6d6ea743-8e66-4bcb-accb-f34c43dfb105  *******/
