@@ -24,7 +24,7 @@ const Navbar = () => {
     );
 
     return (
-        <div className="navbar bg-white dark:bg-gray-800 text-black dark:text-white md:w-11/12 mx-auto ">
+        <div className="navbar bg-white dark:bg-gray-800 text-black dark:text-white w-full md:w-11/12 mx-auto ">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -100,7 +100,7 @@ const Navbar = () => {
                         >
                             <div className="w-10 rounded-full">
                                 <img
-                                    src={user?.photoURL.split("?")[0] || "https://via.placeholder.com/150"}
+                                    src={user?.photoURL?.split("?")[0] || "https://via.placeholder.com/150"}
                                     alt="User Avatar"
                                 />
                             </div>
