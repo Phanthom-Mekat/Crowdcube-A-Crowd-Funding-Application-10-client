@@ -1,6 +1,7 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
     const settings = {
@@ -10,7 +11,7 @@ const Hero = () => {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 3000,
+        autoplaySpeed: 2000,
         arrows: false,
         adaptiveHeight: true,
     };
@@ -34,10 +35,10 @@ const Hero = () => {
     ];
 
     return (
-        <section className="w-full">
+        <section className="w-full ">
             <Slider {...settings}>
                 {slides.map((slide, index) => (
-                    <div key={index} className="relative h-[400px]  lg:h-[600px]">
+                    <div key={index} className="relative h-[300px]  lg:h-[500px]">
                         <div
                             className="absolute inset-0 bg-cover bg-center bg-opacity-75 bg-black"
                             style={{ backgroundImage: `url(${slide.img})` }}
@@ -47,7 +48,7 @@ const Hero = () => {
                             <div className="text-center   p-6 md:p-10 rounded-lg max-w-2xl mx-4">
                                 <h2 className="text-3xl h-font md:text-4xl font-bold text-white mb-4">{slide.title}</h2>
                                 <p className="text-sm p-font md:text-lg text-gray-300">{slide.description}</p>
-                                <button className="btn  bg-primary/80 border-none hover:bg-primary text-white font-bold py-2 px-4 rounded-xl mt-4" >Get Started</button>
+                                <Link to="/campaigns" className="btn  bg-primary/80 border-none hover:bg-primary text-white font-bold py-2 px-4 rounded-xl mt-4" >Get Started</Link>
                             </div>
                         </div>
                     </div>

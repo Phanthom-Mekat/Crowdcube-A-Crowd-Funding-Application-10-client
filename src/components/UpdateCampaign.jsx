@@ -1,49 +1,48 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
+import { PlusCircle, DollarSign, Calendar, Image, FileText, UserCircle, Mail, Tag } from 'lucide-react';
 
 const UpdateCampaign = () => {
     const { user } = useContext(AuthContext);
     const loadedCampaigns = useLoaderData();
-    console.log(loadedCampaigns)
-    const {_id,
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    
+    const {
+        _id,
         title,
         type,
         description,
         minDonation,
         deadline,
-        image } = loadedCampaigns
+        image
+    } = loadedCampaigns;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         const form = e.target;
-        const title = form.title.value;
-        const type = form.type.value;
-        const description = form.description.value;
-        const minDonation = form.minDonation.value;
-        const deadline = form.deadline.value;
-        const image = form.image.value;
-
         const campaign = {
-            title,
-            type,
-            description,
-            minDonation,
-            deadline,
-            image
+            title: form.title.value,
+            type: form.type.value,
+            description: form.description.value,
+            minDonation: form.minDonation.value,
+            deadline: form.deadline.value,
+            image: form.image.value
         };
 
-        fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${_id}`, {
-            method: "PUT",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(campaign),
-        })
-        .then((res) => res.json())
-        .then((data) => {
+        try {
+            const response = await fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${_id}`, {
+                method: "PUT",
+                headers: {
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(campaign),
+            });
+            const data = await response.json();
+            
             if (data.modifiedCount > 0) {
                 Swal.fire({
                     title: 'Success!',
@@ -51,155 +50,195 @@ const UpdateCampaign = () => {
                     icon: 'success',
                     confirmButtonText: 'Cool'
                 });
-                
             }
-        })
-            }
+        } catch (error) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Failed to update campaign',
+                icon: 'error',
+                confirmButtonText: 'Retry'
+            });
+        }
+        setIsSubmitting(false);
+    };
+
+    const InputWrapper = ({ children }) => (
+        <div className="relative">
+            {children}
+        </div>
+    );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto">
-                <div className="bg-white shadow-2xl rounded-lg overflow-hidden">
-                    <div className="px-4 py-5 sm:p-6">
-                        <h2 className="text-3xl font-extrabold text-gray-900 text-center mb-6">
-                            Update Your Campaign {user?.displayName}
-                        </h2>
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                                <div>
-                                    <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
-                                        User Name
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20  px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+                <div className="bg-white dark:bg-gray-800 shadow-2xl rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                    <div className="px-6 py-8 sm:p-10">
+                        <div className="mb-8 text-center">
+                            <PlusCircle className="w-12 h-12 mx-auto mb-4 text-primary" />
+                            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white">
+                                Update Your Campaign
+                            </h2>
+                            <p className="mt-2 text-gray-600 dark:text-gray-400">
+                                Modify your campaign details below
+                            </p>
+                        </div>
+
+                        <form onSubmit={handleSubmit} className="space-y-8">
+                            {/* User Info Section */}
+                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                <InputWrapper>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <UserCircle className="w-4 h-4" />
+                                            <span>User Name</span>
+                                        </div>
                                     </label>
                                     <input
                                         type="text"
-                                        id="userName"
-                                        name="userName"
                                         value={user?.displayName}
                                         readOnly
-                                        className="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
+                                        className="w-full px-4 py-3 rounded-lg border bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
                                     />
-                                </div>
-                                <div>
-                                    <label htmlFor="userEmail" className="block text-sm font-medium text-gray-700">
-                                        User Email
+                                </InputWrapper>
+
+                                <InputWrapper>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <Mail className="w-4 h-4" />
+                                            <span>Email Address</span>
+                                        </div>
                                     </label>
                                     <input
                                         type="email"
-                                        id="userEmail"
-                                        name="userEmail"
                                         value={user?.email}
                                         readOnly
-                                        className="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
+                                        className="w-full px-4 py-3 rounded-lg border bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
                                     />
-                                </div>
+                                </InputWrapper>
                             </div>
 
-                            <div>
-                                <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                                    Campaign Title
-                                </label>
-                                <input
-                                    type="text"
-                                    id="title"
-                                    name="title"
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
-                                    placeholder="Enter campaign title"
-                                    required
-                                    defaultValue={title}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="type" className="block text-sm font-medium text-gray-700">
-                                    Campaign Type
-                                </label>
-                                <select
-                                    id="type"
-                                    name="type"
-                                    className="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm rounded-md"
-                                    required
-                                    defaultValue={type}
-                                >
-                                    <option value="">Select a type</option>
-                                    <option value="personal">Personal Issue</option>
-                                    <option value="startup">Startup</option>
-                                    <option value="business">Business</option>
-                                    <option value="creative">Creative Ideas</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                                    Description
-                                </label>
-                                <textarea
-                                    id="description"
-                                    name="description"
-                                    rows={4}
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
-                                    placeholder="Describe your campaign"
-                                    required
-                                    defaultValue={description}
-                                ></textarea>
-                            </div>
-
-                            <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-2">
-                                <div>
-                                    <label htmlFor="minDonation" className="block text-sm font-medium text-gray-700">
-                                        Minimum Donation Amount
-                                    </label>
-                                    <div className="mt-1 relative rounded-md shadow-sm">
-                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                            <span className="text-gray-500 sm:text-sm">$</span>
+                            {/* Campaign Details */}
+                            <div className="space-y-6">
+                                <InputWrapper>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <FileText className="w-4 h-4" />
+                                            <span>Campaign Title</span>
                                         </div>
-                                        <input
-                                            type="number"
-                                            id="minDonation"
-                                            name="minDonation"
-                                            className="mt-1 block w-full pl-7 pr-12 border border-gray-300 rounded-md shadow-sm py-2 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
-                                            placeholder="0.00"
-                                            required
-                                            defaultValue={minDonation}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="deadline" className="block text-sm font-medium text-gray-700">
-                                        Deadline
                                     </label>
                                     <input
-                                        type="date"
-                                        id="deadline"
-                                        name="deadline"
-                                        className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
-                                        required
-                                        defaultValue={deadline}
+                                        type="text"
+                                        name="title"
+                                        defaultValue={title}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
                                     />
+                                </InputWrapper>
+
+                                <InputWrapper>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <Tag className="w-4 h-4" />
+                                            <span>Campaign Type</span>
+                                        </div>
+                                    </label>
+                                    <select
+                                        name="type"
+                                        defaultValue={type}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
+                                    >
+                                        <option value="">Select campaign type</option>
+                                        <option value="personal">Personal Issue</option>
+                                        <option value="startup">Startup</option>
+                                        <option value="business">Business</option>
+                                        <option value="creative">Creative Ideas</option>
+                                    </select>
+                                </InputWrapper>
+
+                                <InputWrapper>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <FileText className="w-4 h-4" />
+                                            <span>Description</span>
+                                        </div>
+                                    </label>
+                                    <textarea
+                                        name="description"
+                                        rows={4}
+                                        defaultValue={description}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
+                                    />
+                                </InputWrapper>
+
+                                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                    <InputWrapper>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            <div className="flex items-center gap-2">
+                                                <DollarSign className="w-4 h-4" />
+                                                <span>Minimum Donation</span>
+                                            </div>
+                                        </label>
+                                        <div className="relative">
+                                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <span className="text-gray-500 dark:text-gray-400">$</span>
+                                            </div>
+                                            <input
+                                                type="number"
+                                                name="minDonation"
+                                                defaultValue={minDonation}
+                                                className="w-full pl-8 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
+                                            />
+                                        </div>
+                                    </InputWrapper>
+
+                                    <InputWrapper>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                            <div className="flex items-center gap-2">
+                                                <Calendar className="w-4 h-4" />
+                                                <span>Campaign Deadline</span>
+                                            </div>
+                                        </label>
+                                        <input
+                                            type="date"
+                                            name="deadline"
+                                            defaultValue={deadline}
+                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
+                                        />
+                                    </InputWrapper>
                                 </div>
+
+                                <InputWrapper>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <Image className="w-4 h-4" />
+                                            <span>Campaign Image URL</span>
+                                        </div>
+                                    </label>
+                                    <input
+                                        type="url"
+                                        name="image"
+                                        defaultValue={image}
+                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary/50"
+                                    />
+                                </InputWrapper>
                             </div>
 
-                            <div>
-                                <label htmlFor="image" className="block text-sm font-medium text-gray-700">
-                                    Image URL
-                                </label>
-                                <input
-                                    type="url"
-                                    id="image"
-                                    name="image"
-                                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-[#FF7A00] focus:border-[#FF7A00] sm:text-sm"
-                                    placeholder="https://example.com/image.jpg"
-                                    required
-                                    defaultValue={image}
-                                />
-                            </div>
-
-                            <div>
+                            <div className="pt-4">
                                 <button
                                     type="submit"
-                                    className="mt-4 bg-[#FF7A00] btn w-full text-white py-2 px-4 rounded-md hover:bg-[#FF7A00] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF7A00]"
+                                    disabled={isSubmitting}
+                                    className="w-full btn bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
-                                    Update
+                                    {isSubmitting ? (
+                                        <>
+                                            <span className="loading loading-spinner"></span>
+                                            Updating Campaign...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <PlusCircle className="w-5 h-5" />
+                                            Update Campaign
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </form>
@@ -209,4 +248,5 @@ const UpdateCampaign = () => {
         </div>
     );
 };
+
 export default UpdateCampaign;

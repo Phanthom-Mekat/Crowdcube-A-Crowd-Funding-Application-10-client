@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../provider/AuthProvider";
-
-import {  Trash2Icon } from "lucide-react";
+import { Trash2Icon } from "lucide-react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -51,11 +50,10 @@ const MyCampaign = () => {
         });
     };
 
-
     return (
-        <div className="min-h-screen bg-gray-50 py-20">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20">
             <div className="container mx-auto px-4">
-                <h1 className="text-3xl font-bold text-center mb-12">My Campaigns</h1>
+                <h1 className="text-3xl font-bold text-center mb-12 text-black dark:text-white">My Campaigns</h1>
 
                 {campaigns === null && (
                     <div className="flex justify-center items-center">
@@ -65,15 +63,15 @@ const MyCampaign = () => {
 
                 {campaigns?.length === 0 && (
                     <div className="flex justify-center items-center">
-                        <p className="text-lg text-gray-500">No campaigns found.</p>
+                        <p className="text-lg text-gray-500 dark:text-gray-400">No campaigns found.</p>
                     </div>
                 )}
 
                 {campaigns?.length > 0 && (
                     <div className="overflow-x-auto">
-                        <table className="table w-full bg-white shadow-lg rounded-lg">
+                        <table className="table w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg">
                             <thead>
-                                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                <tr className="bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase text-sm leading-normal">
                                     <th className="py-3 px-6 text-left">Image</th>
                                     <th className="py-3 px-6 text-left">Title</th>
                                     <th className="py-3 px-6 text-left">Posted By</th>
@@ -83,11 +81,11 @@ const MyCampaign = () => {
                                     <th className="py-3 px-6 text-center">Details</th>
                                 </tr>
                             </thead>
-                            <tbody className="text-gray-600 text-sm font-light">
+                            <tbody className="text-gray-600 dark:text-gray-400 text-sm font-light">
                                 {campaigns.map((campaign) => (
                                     <tr
                                         key={campaign._id}
-                                        className="border-b border-gray-200 hover:bg-gray-100"
+                                        className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
                                     >
                                         <td className="py-3 px-6">
                                             <div className="flex items-center gap-3">
@@ -111,7 +109,7 @@ const MyCampaign = () => {
                                         <td className="py-3 px-6 text-center">
                                             <Link
                                                 to={`/updateCampaign/${campaign._id}`}
-                                                className="btn bg-secondary btn-xs"
+                                                className="btn bg-secondary dark:bg-secondary-dark btn-xs"
                                             >
                                               Update
                                             </Link>
@@ -131,3 +129,4 @@ const MyCampaign = () => {
 };
 
 export default MyCampaign;
+

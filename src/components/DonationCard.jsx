@@ -1,66 +1,101 @@
-/* eslint-disable react/prop-types */
-
-import { Heart, ArrowRight, Clock } from 'lucide-react';
+import { Heart, ArrowRight, Clock, DollarSign, Tag, Flame } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const DonationCard = ({ campaigns,amount }) => {
+const DonationCard = ({ campaigns, amount }) => {
     const [campaign, setCampaign] = useState(null);
+    const [isLiked, setIsLiked] = useState(false);
 
     useEffect(() => {
         fetch(`https://batch-10-assignment-10-server.vercel.app/campaigns/${campaigns}`)
             .then((res) => res.json())
             .then((data) => setCampaign(data))
             .catch((error) => console.error("Failed to fetch campaign:", error));
-    }, [campaign, campaigns]);
-
+    }, [campaigns]);
 
     return (
-        <div className="group relative bg-white border-2 border-gray-100 rounded-xl overflow-hidden shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
-            {/* Gradient Overlay & Image */}
-            <div className="relative">
-                <img
-                    src={campaign?.image}
-                    alt={campaign?.title}
-                    className="h-48 w-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        <div className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden transform transition-all duration-500 hover:-translate-y-2">
+            {/* Card Inner Shadow Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/0 to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+            
+            {/* Image Container */}
+            <div className="relative overflow-hidden">
+                <div className="relative h-48">
+                    {/* Image with Zoom Effect */}
+                    <img
+                        src={campaign?.image}
+                        alt={campaign?.title}
+                        className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                    />
+                    
+                    {/* Gradient Overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                {/* Favorite Button */}
-                <button className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/40 transition-colors">
-                    <Heart className="text-white w-5 h-5 fill-current" />
-                </button>
+                    {/* Like Button */}
+                    <button 
+                        onClick={() => setIsLiked(!isLiked)}
+                        className="absolute top-4 right-4 p-2 backdrop-blur-md bg-white/10 rounded-full transform transition-all duration-300 hover:scale-110 hover:bg-white/20"
+                    >
+                        <Heart 
+                            className={`w-5 h-5 transition-colors duration-300 ${
+                                isLiked ? 'text-red-500 fill-red-500' : 'text-white'
+                            }`}
+                        />
+                    </button>
+
+                    {/* Campaign Type Badge */}
+                    <div className="absolute top-4 left-4">
+                        <div className="flex items-center gap-2 px-3 py-1 rounded-full backdrop-blur-md bg-white/10 text-white text-sm font-medium">
+                            <Tag className="w-4 h-4" />
+                            {campaign?.type}
+                        </div>
+                    </div>
+
+                    {/* Deadline Badge */}
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">
+                        <Clock className="w-4 h-4" />
+                        <span className="text-sm">
+                            {new Date(campaign?.deadline).toLocaleDateString()}
+                        </span>
+                    </div>
+                </div>
             </div>
 
-            {/* Card Content */}
-            <div className="p-5 space-y-3">
-                {/* Campaign Type & Deadline */}
-                <div className="flex justify-between items-center">
-                    <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
-                        {campaign?.type}
-                    </span>
-                    <div className="flex items-center text-gray-500 text-sm space-x-1">
-                        <Clock className="w-4 h-4" />
-                        <span>{new Date(campaign?.deadline).toLocaleDateString()}</span>
-                    </div>
-                </div>
-
-                {/* Campaign Title */}
-                <h3 className="text-xl font-bold text-gray-800 group-hover:text-primary transition-colors line-clamp-2">
+            {/* Content Section */}
+            <div className="p-6 space-y-4">
+                {/* Title with Line Clamp */}
+                <h3 className="text-xl font-bold text-gray-800 dark:text-white group-hover:text-primary transition-colors duration-300 line-clamp-2">
                     {campaign?.title}
                 </h3>
-                {/* Donation Details */}
-                <div className="flex justify-between items-center">
-                    <div className="text-sm text-gray-700">
-                        Min Donation: <span className="font-semibold text-primary">${campaign?.minDonation}</span>
+
+                {/* Donation Information */}
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Minimum Donation</p>
+                        <div className="flex items-center gap-1 text-primary font-bold">
+                            <DollarSign className="w-4 h-4" />
+                            <span>{campaign?.minDonation}</span>
+                        </div>
                     </div>
-                    <div className="text-sm text-gray-700">
-                        Your Donation: <span className="font-semibold text-primary">${amount}</span>
+                    <div className="space-y-1">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Your Contribution</p>
+                        <div className="flex items-center gap-1 text-primary font-bold">
+                            <Flame className="w-4 h-4" />
+                            <span>${amount}</span>
+                        </div>
                     </div>
                 </div>
 
-                <button className="w-full flex items-center justify-center bg-primary text-white py-3 rounded-lg hover:bg-primary-focus transition-colors group/button">
-                    See More
-                    <ArrowRight className="ml-2 w-5 h-5 transform group-hover/button:translate-x-1 transition-transform" />
+                {/* Action Button */}
+                <button className="relative w-full overflow-hidden group/button">
+                    <div className="relative px-6 py-3 bg-primary rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-transform duration-300 group-hover/button:-translate-y-[120%]">
+                        <span>View Details</span>
+                        <ArrowRight className="w-5 h-5" />
+                    </div>
+                    <div className="absolute inset-0 px-6 py-3 bg-primary rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-transform duration-300 translate-y-[120%] group-hover/button:translate-y-0">
+                        <span>Explore More</span>
+                        <ArrowRight className="w-5 h-5 animate-bounce-x" />
+                    </div>
                 </button>
             </div>
         </div>
@@ -68,3 +103,18 @@ const DonationCard = ({ campaigns,amount }) => {
 };
 
 export default DonationCard;
+
+// Add this to your CSS/Tailwind config
+const customStyles = `
+@keyframes bounce-x {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(25%);
+    }
+}
+.animate-bounce-x {
+    animation: bounce-x 1s infinite;
+}
+`;
